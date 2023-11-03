@@ -1,0 +1,22 @@
+{
+    "name": "hexlet/code",
+    "description": "php project 48",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Hexlet\\Code\\": "src/"
+        },
+        "files": [
+            "vendor/docopt/docopt/src/docopt.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Mikhail Tsepelev",
+            "email": "cplvmhl@gmail.com"
+        }
+    ],
+    "require": {
+        "docopt/docopt": "^1.0"
+    }
+}
