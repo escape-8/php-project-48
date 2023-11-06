@@ -7,9 +7,13 @@
             "Hexlet\\Code\\": "src/"
         },
         "files": [
-            "vendor/docopt/docopt/src/docopt.php"
+            "vendor/docopt/docopt/src/docopt.php",
+            "src/Differ.php"
         ]
     },
+    "bin": [
+        "bin/gendiff"
+    ],
     "authors": [
         {
             "name": "Mikhail Tsepelev",
