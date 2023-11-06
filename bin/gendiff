@@ -4,6 +4,8 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use function Gendiff\Differ\genDiff;
+
 $doc = <<<DOC
     Generate diff
 
@@ -16,10 +18,13 @@ $doc = <<<DOC
       -h --help                     Show this screen
       -v --version                  Show version
       --format <fmt>                Report format [default: stylish]
-DOC;
+    DOC;
 
 
-$args = Docopt::handle($doc, array('version'=>'Generate diff 1.0'));
-foreach ($args as $k=>$v)
-    echo $k.': '.json_encode($v).PHP_EOL;
+$args = Docopt::handle($doc, array('version' => 'Generate diff 1.0'));
+foreach ($args as $k => $v) {
+    echo $k . ': ' . json_encode($v) . PHP_EOL;
+}
 
+$result = genDiff($args['<firstFile>'], $args['<secondFile>'], $args['--format']);
+print_r($result);
