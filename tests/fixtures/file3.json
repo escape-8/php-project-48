@@ -1,0 +1,7 @@
+{
+    "address": "hexlet.io",
+    "connect": true,
+    "ping": 30,
+    "ip": "123.234.53.22",
+    "follow": false
+}

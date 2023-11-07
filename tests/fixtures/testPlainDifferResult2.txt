@@ -1,0 +1,9 @@
+{
+    address: hexlet.io
+    connect: true
+  - follow: false
+  - ip: 123.234.53.22
+  - ping: 30
+  + ping: 25
+  + test: true
+}
