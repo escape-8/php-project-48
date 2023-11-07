@@ -8,5 +8,5 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: make install
-      - run: make tests
+      - run: make test
       - run: make lint
