@@ -11,7 +11,7 @@ class DifferTest extends TestCase
     public function createFixturePath(string $fixtureName): string
     {
         $parts = ['tests', 'fixtures', $fixtureName];
-        return realpath(implode('/', $parts));
+        return (string) realpath(implode('/', $parts));
     }
 
     public function testPlainDiffer1(): void
