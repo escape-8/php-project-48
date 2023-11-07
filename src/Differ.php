@@ -2,10 +2,10 @@
 
 namespace Gendiff\Differ;
 
-function genDiff($pathToFile1, $pathToFile2, $format = 'stylish'): string
+function genDiff(string $pathToFile1,string $pathToFile2, string $format = 'stylish'): string
 {
-    $dataFile1 = json_decode(file_get_contents(__DIR__ . $pathToFile1), true);
-    $dataFile2 = json_decode(file_get_contents(__DIR__ . $pathToFile2), true);
+    $dataFile1 = json_decode(file_get_contents(realpath($pathToFile1)), true);
+    $dataFile2 = json_decode(file_get_contents(realpath($pathToFile2)), true);
     ksort($dataFile1);
     ksort($dataFile2);
     $result = [];
