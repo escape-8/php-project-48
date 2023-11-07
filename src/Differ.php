@@ -2,7 +2,7 @@
 
 namespace Gendiff\Differ;
 
-function genDiff(string $pathToFile1,string $pathToFile2, string $format = 'stylish'): string
+function genDiff(string $pathToFile1, string $pathToFile2, string $format = 'stylish'): string
 {
     $dataFile1 = json_decode(file_get_contents(realpath($pathToFile1)), true);
     $dataFile2 = json_decode(file_get_contents(realpath($pathToFile2)), true);
