@@ -1,0 +1,6 @@
+{
+  "ping": 25,
+  "test": true,
+  "connect": true,
+  "address": "hexlet.io"
+}
