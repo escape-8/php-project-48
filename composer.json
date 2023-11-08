@@ -4,12 +4,11 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Hexlet\\Code\\": "src/",
-            "Hexlet\\Code\\Tests\\": "tests/"
+            "Hexlet\\Code\\": "src/"
         },
         "files": [
-            "vendor/docopt/docopt/src/docopt.php",
-            "src/Differ.php"
+            "src/Differ.php",
+            "src/Parsers.php"
         ]
     },
     "bin": [
