@@ -2,10 +2,12 @@
 
 namespace Gendiff\Differ;
 
+use function Gendiff\Parsers\parseToData;
+
 function genDiff(string $pathToFile1, string $pathToFile2, string $format = 'stylish'): string
 {
-    $dataFile1 = json_decode(createFileContent($pathToFile1), true);
-    $dataFile2 = json_decode(createFileContent($pathToFile2), true);
+    $dataFile1 = parseToData($pathToFile1);
+    $dataFile2 = parseToData($pathToFile2);
     ksort($dataFile1);
     ksort($dataFile2);
     $result = [];
@@ -41,9 +43,4 @@ function genDiff(string $pathToFile1, string $pathToFile2, string $format = 'sty
     }
 
     return "{\n" . implode("\n", $result) . "\n}\n";
-}
-
-function createFileContent(string $path): string
-{
-    return (string) file_get_contents((string) realpath($path));
 }
