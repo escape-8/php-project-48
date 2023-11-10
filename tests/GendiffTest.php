@@ -45,4 +45,20 @@ class GendiffTest extends TestCase
         $pathFile2 = $this->createFixturePath('file4.yaml');
         $this->assertEquals($expected, genDiff($pathFile1, $pathFile2));
     }
+
+    public function testRecursionFiles1(): void
+    {
+        $expected = file_get_contents($this->createFixturePath('testRecDifferResult1.txt'));
+        $pathFile1 = $this->createFixturePath('file1rec.json');
+        $pathFile2 = $this->createFixturePath('file2rec.json');
+        $this->assertEquals($expected, genDiff($pathFile1, $pathFile2));
+    }
+
+    public function testRecursionFiles2(): void
+    {
+        $expected = file_get_contents($this->createFixturePath('testRecDifferResult1.txt'));
+        $pathFile1 = $this->createFixturePath('file1rec.yml');
+        $pathFile2 = $this->createFixturePath('file2rec.yaml');
+        $this->assertEquals($expected, genDiff($pathFile1, $pathFile2));
+    }
 }
