@@ -10,7 +10,8 @@
             "src/Differ.php",
             "src/Parsers.php",
             "src/Formatters.php",
-            "src/formatters/Stylish.php"
+            "src/formatters/Stylish.php",
+            "src/formatters/Plain.php"
         ]
     },
     "bin": [
