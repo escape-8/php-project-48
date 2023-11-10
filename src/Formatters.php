@@ -3,11 +3,12 @@
 namespace Gendiff\Formatters;
 
 use function Gendiff\Formatters\Stylish\stringify;
+use function Gendiff\Formatters\Plain\plainStringify;
 
 function createFormat(array $data, string $format): string
 {
-    if ($format === 'stylish') {
-        return stringify($data);
+    if ($format === 'plain') {
+        return plainStringify($data);
     }
-    return '';
+    return stringify($data);
 }
