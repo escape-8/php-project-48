@@ -61,4 +61,12 @@ class GendiffTest extends TestCase
         $pathFile2 = $this->createFixturePath('file2rec.yaml');
         $this->assertEquals($expected, genDiff($pathFile1, $pathFile2));
     }
+
+    public function testPlainFormatter1(): void
+    {
+        $expected = file_get_contents($this->createFixturePath('testPlainFormatterResult1.txt'));
+        $pathFile1 = $this->createFixturePath('file1rec.json');
+        $pathFile2 = $this->createFixturePath('file2rec.json');
+        $this->assertEquals($expected, genDiff($pathFile1, $pathFile2, 'plain'));
+    }
 }
