@@ -29,10 +29,6 @@ function iter(array $value, string $replacer = ' ', int $spacesCount = 1, array 
             return $spaceItems . $key . ': ' . $val;
         }
 
-        if ($val === "") {
-            return $spaceItems . $key . ':' . toString($val);
-        }
-
         return $spaceItems . $key . ': ' . toString($val);
     }, $keys, $value);
     $accStr = array_merge($accStr, $newStrings);
