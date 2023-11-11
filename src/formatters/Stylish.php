@@ -10,7 +10,7 @@ function toString(mixed $value): string
 function stringify(mixed $value, string $replacer = ' ', int $spacesCount = 2): string
 {
     if (is_array($value)) {
-        return implode("\n", iter($value, $replacer, $spacesCount)) . "\n";
+        return implode("\n", iter($value, $replacer, $spacesCount));
     }
     return toString($value);
 }

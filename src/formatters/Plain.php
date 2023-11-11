@@ -7,7 +7,7 @@ use function Gendiff\Formatters\Stylish\toString;
 function plainStringify(array $data): string
 {
     $result = arrayFlatten(iter($data));
-    return implode("\n", $result) . "\n";
+    return implode("\n", $result);
 }
 
 function iter(array $data, array $keyPath = [], array $passedKeys = []): array

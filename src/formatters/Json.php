@@ -7,7 +7,7 @@ use function Gendiff\Formatters\Plain\takeKey;
 function jsonStringify(array $data): string
 {
     $jsonData = createJsonData($data);
-    return json_encode($jsonData, JSON_PRETTY_PRINT) . "\n";
+    return json_encode($jsonData, JSON_PRETTY_PRINT);
 }
 
 function createJsonData(array $data): array
