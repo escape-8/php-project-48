@@ -1,6 +1,6 @@
 <?php
 
-namespace Gendiff\Differ;
+namespace Differ\Differ;
 
 use function Gendiff\Parsers\parseToData;
 use function Gendiff\Formatters\createFormat;
