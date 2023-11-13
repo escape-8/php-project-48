@@ -22,10 +22,6 @@ $doc = <<<DOC
 
 
 $args = Docopt::handle($doc, array('version' => 'Generate diff 1.0'));
-echo "{\n";
-foreach ($args as $k => $v) {
-    echo $k . ': ' . json_encode($v) . PHP_EOL;
-}
 
 $result = genDiff($args['<firstFile>'], $args['<secondFile>'], $args['--format']);
 print_r($result);
