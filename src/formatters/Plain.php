@@ -18,13 +18,13 @@ function iter(array $data, array $keyPath = [], array $passedKeys = []): array
         $keyPath[] = $keyVal;
 
         if (is_array($val) && (str_starts_with($key, ' '))) {
-            return iter($val, $keyPath, $passedKeys);
+            return iter($val, $keyPath, $passedKeys = []);
         }
 
         if ((str_starts_with($key, ' ')) || (in_array($keyVal, $passedKeys, true))) {
             return null;
         }
-
+        var_dump($keyPath);
         $passedKeys[] = $keyVal;
 
         if (str_starts_with($key, '-')) {
@@ -34,7 +34,6 @@ function iter(array $data, array $keyPath = [], array $passedKeys = []): array
 
                 return createUpdateMessage($keyPath, $valFrom, $valTo);
             }
-
             return createRemoveMessage($keyPath);
         }
         return createAddedMessage($keyPath, $val);
