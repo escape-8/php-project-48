@@ -24,7 +24,6 @@ function iter(array $data, array $keyPath = [], array $passedKeys = []): array
         if ((str_starts_with($key, ' ')) || (in_array($keyVal, $passedKeys, true))) {
             return null;
         }
-        var_dump($keyPath);
         $passedKeys[] = $keyVal;
 
         if (str_starts_with($key, '-')) {
