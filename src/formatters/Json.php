@@ -41,7 +41,7 @@ function iter(array $data, array $passedKeys = []): array
             return null;
         }
 
-        $passedKeys[] = $keyVal;
+        $passedKeys = array_merge($passedKeys, [$keyVal]);
 
         if (str_starts_with($key, '-')) {
             if (array_key_exists('+ ' . $keyVal, $data)) {
@@ -96,14 +96,16 @@ function fixKeys(mixed $data): mixed
     $keys = array_keys($data);
 
     $newKeys = array_map(function ($key, $val) {
+        $keyVal = takeKey($key);
+
         if ($val === 'null') {
-            $val = json_decode($val);
+            return [$keyVal => json_decode($val)];
         }
 
-        $keyVal = takeKey($key);
         if (is_array($val)) {
             return [$keyVal => fixKeys($val)];
         }
+
         return [$keyVal => $val];
     }, $keys, $data);
     return array_merge([], ...$newKeys);
