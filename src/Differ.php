@@ -4,6 +4,7 @@ namespace Differ\Differ;
 
 use function Gendiff\Parsers\parseToData;
 use function Gendiff\Formatters\createFormat;
+use function Functional\sort;
 
 function genDiff(string $pathToFile1, string $pathToFile2, string $format = 'stylish'): string
 {
@@ -15,8 +16,7 @@ function genDiff(string $pathToFile1, string $pathToFile2, string $format = 'sty
 
 function createDiff(array $dataFile1, array $dataFile2): array
 {
-    $dataSum = array_merge($dataFile1, $dataFile2);
-    ksort($dataSum);
+    $dataSum = sortingKeys(array_merge($dataFile1, $dataFile2));
     $dataSumKeys = array_keys($dataSum);
 
     $diff = array_map(function ($key, $valueFileSum) use ($dataFile2, $dataFile1) {
@@ -77,6 +77,18 @@ function createDiff(array $dataFile1, array $dataFile2): array
     }, $dataSumKeys, $dataSum);
 
     return array_merge([], ...$diff);
+}
+
+function sortingKeys(array $data): array
+{
+    $dataKey = array_keys($data);
+    $sortKey = sort($dataKey, fn($keyA, $keyB) => strcmp($keyA, $keyB), true);
+
+    $newData = array_map(function ($key) use ($data) {
+        return [$key => $data[$key]];
+    }, $sortKey);
+
+    return array_merge([], ...$newData);
 }
 
 function checkNull(mixed $item): mixed
