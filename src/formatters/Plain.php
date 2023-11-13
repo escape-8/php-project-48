@@ -3,54 +3,48 @@
 namespace Gendiff\Formatters\Plain;
 
 use function Gendiff\Formatters\Stylish\toString;
+use function Functional\flatten;
 
 function plainStringify(array $data): string
 {
-    $result = arrayFlatten(iter($data));
+    $result = flatten(iter($data));
     return implode("\n", $result);
 }
 
-function iter(array $data, array $keyPath = [], array $passedKeys = []): array
+function iter(array $data, array $keyPath = []): array
 {
     $keys = array_keys($data);
-    $messages = array_map(function ($key, $val) use ($keyPath, $data, &$passedKeys) {
+    $messages = array_map(function ($key, $val) use ($keyPath, $data) {
         $keyVal = takeKey($key);
-        $keyPath[] = $keyVal;
+        $newKeyPath = array_merge($keyPath, [$keyVal]);
 
         if (is_array($val) && (str_starts_with($key, ' '))) {
-            return iter($val, $keyPath, $passedKeys = []);
+            return iter($val, $newKeyPath);
         }
 
-        if ((str_starts_with($key, ' ')) || (in_array($keyVal, $passedKeys, true))) {
+        if ((str_starts_with($key, ' '))) {
             return null;
         }
-        $passedKeys[] = $keyVal;
+
+        if (str_starts_with($key, '+')) {
+            if (array_key_exists('- ' . $keyVal, $data)) {
+                return null;
+            }
+        }
 
         if (str_starts_with($key, '-')) {
             if (array_key_exists('+ ' . $keyVal, $data)) {
                 $valFrom = $val;
                 $valTo = $data["+ " . $keyVal];
 
-                return createUpdateMessage($keyPath, $valFrom, $valTo);
+                return createUpdateMessage($newKeyPath, $valFrom, $valTo);
             }
-            return createRemoveMessage($keyPath);
+            return createRemoveMessage($newKeyPath);
         }
-        return createAddedMessage($keyPath, $val);
+        return createAddedMessage($newKeyPath, $val);
     }, $keys, $data);
 
     return array_values(array_filter($messages, fn($item) => $item !== null));
-}
-
-function arrayFlatten(array $array): array
-{
-    return array_reduce($array, function ($acc, $item) {
-        if (is_array($item)) {
-            $acc = array_merge($acc, $item);
-            return arrayFlatten($acc);
-        }
-        $acc[] = $item;
-        return $acc;
-    }, []);
 }
 
 function checkReturnValue(mixed $value): mixed
@@ -97,5 +91,5 @@ function takeKey(string $key): string
 
 function createKeyPath(array $keyPath): string
 {
-    return implode('.', $keyPath);
+    return implode('.', flatten($keyPath));
 }
