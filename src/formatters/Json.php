@@ -15,16 +15,16 @@ function createJsonData(array $data): array
     return iter($data);
 }
 
-function iter(array $data, array $passedKeys = []): array
+function iter(array $data): array
 {
     $keys = array_keys($data);
 
-    $newData = array_map(function ($key, $val) use ($data, &$passedKeys) {
+    $newData = array_map(function ($key, $val) use ($data) {
         $keyVal = takeKey($key);
 
         if (is_array($val)) {
             if (str_starts_with($key, ' ')) {
-                return [$keyVal => iter($val, $passedKeys)];
+                return [$keyVal => iter($val)];
             }
         }
 
@@ -36,12 +36,6 @@ function iter(array $data, array $passedKeys = []): array
                 ]
             ];
         }
-
-        if (in_array($keyVal, $passedKeys, true)) {
-            return null;
-        }
-
-        $passedKeys = array_merge($passedKeys, [$keyVal]);
 
         if (str_starts_with($key, '-')) {
             if (array_key_exists('+ ' . $keyVal, $data)) {
@@ -62,6 +56,12 @@ function iter(array $data, array $passedKeys = []): array
                     'removeValue' => fixKeys($val)
                 ]
             ];
+        }
+
+        if (str_starts_with($key, '+')) {
+            if (array_key_exists('- ' . $keyVal, $data)) {
+                return null;
+            }
         }
 
         if (is_array($val)) {
