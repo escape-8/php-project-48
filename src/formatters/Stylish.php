@@ -15,23 +15,25 @@ function stringify(mixed $value, string $replacer = ' ', int $spacesCount = 2): 
     return toString($value);
 }
 
-function iter(array $value, string $replacer = ' ', int $spacesCount = 1, array $accStr = [], int $depth = 0): array
+function iter(array $value, string $replacer = ' ', int $spacesCount = 1, int $depth = 0): array
 {
-    $accStr[] = "{";
     $keys = array_keys($value);
+    $newDepth = $depth + 1;
 
-    $newStrings = array_map(function ($key, $val) use ($replacer, $spacesCount, $depth) {
-        $depth++;
-        $spaceItems = str_repeat($replacer, ($spacesCount * $depth));
+    $newStrings = array_map(function ($key, $val) use ($replacer, $spacesCount, $newDepth) {
+        $spaceItems = str_repeat($replacer, ($spacesCount * $newDepth));
 
         if (is_array($val)) {
-            $val = implode("\n", iter($val, $replacer, $spacesCount, $accStr = [], $depth += 1));
-            return $spaceItems . $key . ': ' . $val;
+            $subDepth = $newDepth + 1;
+            $data = implode("\n", iter($val, $replacer, $spacesCount, $subDepth));
+            return $spaceItems . $key . ': ' . $data;
         }
 
         return $spaceItems . $key . ': ' . toString($val);
     }, $keys, $value);
-    $accStr = array_merge($accStr, $newStrings);
-    $accStr[] = str_repeat($replacer, ($spacesCount * $depth)) . '}';
-    return $accStr;
+
+    $openBracket = ["{"];
+    $closeBracket = [str_repeat($replacer, ($spacesCount * $depth)) . "}"];
+
+    return array_merge($openBracket, $newStrings, $closeBracket);
 }
