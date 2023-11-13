@@ -37,7 +37,7 @@ function iter(array $data, array $passedKeys = []): array
             ];
         }
 
-        if (in_array($keyVal, $passedKeys)) {
+        if (in_array($keyVal, $passedKeys, true)) {
             return null;
         }
 
